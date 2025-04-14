@@ -39,7 +39,9 @@ user_email = st.text_input("أدخل بريدك الإلكتروني:")
 
 if st.button("بحث") and asset_number:
     df = load_data()
-    matched_asset = df[df[df.columns[0]].astype(str) == asset_number]
+    df_first_col = df.columns[0]
+df[df_first_col] = df[df_first_col].astype(str).str.strip()
+matched_asset = df[df[df_first_col] == asset_number.strip()]
 
     if not matched_asset.empty:
         asset_info = matched_asset.iloc[0].to_dict()
