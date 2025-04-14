@@ -6,7 +6,7 @@ import os
 
 @st.cache_data
 def load_data():
-    df = pd.read_excel("assets_data.xlsx")
+    df = pd.read_csv("assets_data.csv")
     df.columns = df.columns.str.strip()
     return df
 
