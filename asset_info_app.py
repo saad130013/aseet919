@@ -4,9 +4,14 @@ from fpdf import FPDF
 import tempfile
 import os
 
+# تحميل البيانات من ملف CSV بدلاً من Excel
 @st.cache_data
 def load_data():
-    df = pd.read_csv("assets_data.csv")
+    csv_path = "assets_data.csv"
+    if not os.path.exists(csv_path):
+        st.error("⚠️ ملف البيانات 'assets_data.csv' غير موجود في مجلد المشروع.")
+        return pd.DataFrame()
+    df = pd.read_csv(csv_path)
     df.columns = df.columns.str.strip()
     return df
 
@@ -31,6 +36,7 @@ def generate_pdf(asset_info):
     pdf.output(temp_pdf.name)
     return temp_pdf.name
 
+# الواجهة الرئيسية
 st.set_page_config(page_title="البحث عن الأصول", layout="centered")
 st.title("🔍 نظام البحث عن الأصول - هيئة المساحة الجيولوجية")
 
@@ -39,9 +45,13 @@ user_email = st.text_input("أدخل بريدك الإلكتروني:")
 
 if st.button("بحث") and asset_number:
     df = load_data()
+    if df.empty:
+        st.stop()
+
     df_first_col = df.columns[0]
-df[df_first_col] = df[df_first_col].astype(str).str.strip()
-matched_asset = df[df[df_first_col] == asset_number.strip()]
+    df[df_first_col] = df[df_first_col].astype(str).str.strip()
+    asset_number = asset_number.strip()
+    matched_asset = df[df[df_first_col] == asset_number]
 
     if not matched_asset.empty:
         asset_info = matched_asset.iloc[0].to_dict()
