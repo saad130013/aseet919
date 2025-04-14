@@ -1,14 +1,14 @@
-# نظام البحث عن الأصول - هيئة المساحة الجيولوجية
+# Asset Lookup System - Saudi Geological Survey
 
-تطبيق Streamlit يسمح بالبحث عن أصل باستخدام رقم فريد، ويعرض التفاصيل مع إمكانية تحميل تقرير PDF.
+Streamlit app to search assets by asset number and generate an English PDF report.
 
-## المحتويات:
-- `asset_info_app.py` : كود التطبيق
-- `assets_data.csv` : بيانات الأصول
-- `requirements.txt` : الحزم المطلوبة
-- `README.md` : شرح التشغيل
+## Files:
+- `asset_info_app.py`: main app script.
+- `assets_data.csv`: asset data file.
+- `requirements.txt`: dependencies.
+- `README.md`: instructions.
 
-## التشغيل:
+## Run locally:
 ```bash
 pip install -r requirements.txt
 streamlit run asset_info_app.py
