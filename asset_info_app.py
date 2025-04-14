@@ -49,14 +49,18 @@ if st.button("Search") and asset_number:
 
     st.write("Available Columns:", df.columns.tolist())
 
-    df_first_col = df.columns[0]
-    df[df_first_col] = df[df_first_col].astype(str).str.strip()
+    column_name = "رقم الأصل"
+    if column_name not in df.columns:
+        st.error(f"Column '{column_name}' not found in data.")
+        st.stop()
+
+    df[column_name] = df[column_name].astype(str).str.strip()
     asset_number = asset_number.strip()
 
     st.write("Searching for asset number:", asset_number)
-    st.write("Sample values in column:", df[df_first_col].head(10).tolist())
+    st.write("Sample values in column:", df[column_name].head(10).tolist())
 
-    matched_asset = df[df[df_first_col] == asset_number]
+    matched_asset = df[df[column_name] == asset_number]
 
     if not matched_asset.empty:
         asset_info = matched_asset.iloc[0].to_dict()
